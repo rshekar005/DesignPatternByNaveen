@@ -11,6 +11,7 @@ import java.io.Serializable;
  * <p>
  *  This class also implements the {@code Serializable} interface to handle serialization,
  *  ensuring that the Singleton pattern is not broken when the object is serialized and deserialized.
+ *  It also implements the {@code Cloneable} interface but throws an exception to prevent cloning.
  */
 public class Browser implements Serializable, Cloneable {
 
@@ -64,6 +65,12 @@ public class Browser implements Serializable, Cloneable {
         return getInstance();
     }
 
+    /**
+     * Overrides the clone method to prevent cloning of the Singleton instance.
+     *
+     * @return The singleton instance of the {@code Browser} class.
+     * @throws CloneNotSupportedException if an attempt is made to clone the instance.
+     */
     @Override
     protected Object clone() throws CloneNotSupportedException {
         throw new CloneNotSupportedException("Cloning of this class is not allowed");
