@@ -1,11 +1,18 @@
 package com.singletonpattern;
+
+import java.io.Serializable;
+
+
 /**
  * The {@code Browser} class implements the Singleton design pattern to ensure
  * that only one instance of a browser is created throughout the application.
  * This is achieved through a private constructor and a static method that
  * provides access to the single instance.
+ * <p>
+ *  This class also implements the {@code Serializable} interface to handle serialization,
+ *  ensuring that the Singleton pattern is not broken when the object is serialized and deserialized.
  */
-public class Browser {
+public class Browser implements Serializable, Cloneable {
 
     private volatile static Browser browser;
 
@@ -45,5 +52,22 @@ public class Browser {
     public void getInfo(){
         System.out.println("This is a browser");
     }
+
+
+    /**
+     * Method to ensure that the Singleton pattern is not broken during deserialization.
+     * This method is automatically called by the serialization mechanism when an object is deserialized.
+     *
+     * @return The singleton instance of the {@code Browser} class.
+     */
+    protected Object readResolve(){
+        return getInstance();
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException("Cloning of this class is not allowed");
+    }
+
 
 }
